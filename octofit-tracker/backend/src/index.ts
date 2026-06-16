@@ -1,9 +1,21 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import usersRouter from './routes/users';
+import teamsRouter from './routes/teams';
+import activitiesRouter from './routes/activities';
+import leaderboardRouter from './routes/leaderboard';
+import workoutsRouter from './routes/workouts';
 
 const app = express();
-const PORT = process.env.PORT || 8000;
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/octofit';
+const PORT = Number(process.env.PORT || 8000);
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/octofit_db';
+
+// Codespaces-aware host and public URL
+const IS_CODESPACE = Boolean(process.env.CODESPACE_NAME);
+const HOST = IS_CODESPACE ? '0.0.0.0' : 'localhost';
+const PUBLIC_URL = IS_CODESPACE
+  ? `https://${process.env.CODESPACE_NAME}-8000.githubpreview.dev`
+  : `http://${HOST}:${PORT}`;
 
 app.use(express.json());
 
@@ -11,10 +23,21 @@ app.get('/', (req, res) => {
   res.send('OctoFit Tracker backend running');
 });
 
-mongoose.connect(MONGO_URI)
+// Mount API routers
+app.use('/api/users', usersRouter);
+app.use('/api/teams', teamsRouter);
+app.use('/api/activities', activitiesRouter);
+app.use('/api/leaderboard', leaderboardRouter);
+app.use('/api/workouts', workoutsRouter);
+
+mongoose
+  .connect(MONGO_URI)
   .then(() => {
     console.log('Connected to MongoDB');
-    app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
+    app.listen(PORT, HOST, () => {
+      console.log(`Server listening on ${PUBLIC_URL}`);
+      console.log(`Backend reachable at http://${HOST}:${PORT}`);
+    });
   })
   .catch((err) => {
     console.error('MongoDB connection error:', err);
