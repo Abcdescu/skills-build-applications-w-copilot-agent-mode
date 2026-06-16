@@ -4,7 +4,7 @@
  * This script populates users, teams, activities, workouts, and leaderboard
  */
 import mongoose from 'mongoose';
-import { MONGO_URI, connectDatabase } from '../database';
+import { MONGO_URI, connectDatabase } from '../config/database';
 import User from '../models/user';
 import Team from '../models/team';
 import Activity from '../models/activity';
