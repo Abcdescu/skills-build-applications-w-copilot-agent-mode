@@ -10,7 +10,7 @@ export default function Users() {
     const fetchUsers = async () => {
       try {
         setLoading(true);
-        const response = await apiGet('/users');
+        const response = await apiGet('/api/users/');
         const data = extractDataFromResponse(response, 'users');
         setUsers(data);
         setError(null);

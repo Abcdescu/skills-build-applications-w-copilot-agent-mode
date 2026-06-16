@@ -10,7 +10,7 @@ export default function Leaderboard() {
     const fetchLeaderboard = async () => {
       try {
         setLoading(true);
-        const response = await apiGet('/leaderboard');
+        const response = await apiGet('/api/leaderboard/');
         const data = extractDataFromResponse(response, 'leaderboard');
         setLeaderboard(data);
         setError(null);

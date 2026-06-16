@@ -10,7 +10,7 @@ export default function Teams() {
     const fetchTeams = async () => {
       try {
         setLoading(true);
-        const response = await apiGet('/teams');
+        const response = await apiGet('/api/teams/');
         const data = extractDataFromResponse(response, 'teams');
         setTeams(data);
         setError(null);

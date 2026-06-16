@@ -10,7 +10,7 @@ export default function Activities() {
     const fetchActivities = async () => {
       try {
         setLoading(true);
-        const response = await apiGet('/activities');
+        const response = await apiGet('/api/activities/');
         const data = extractDataFromResponse(response, 'activities');
         setActivities(data);
         setError(null);

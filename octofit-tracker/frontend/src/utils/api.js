@@ -20,7 +20,19 @@ export const getApiBaseUrl = () => {
 
 export const apiGet = async (endpoint) => {
   const baseUrl = getApiBaseUrl();
-  const url = `${baseUrl}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
+  let url;
+  
+  // If endpoint already includes /api/, use it as-is with base URL
+  if (endpoint.includes('/api/')) {
+    const codespaceName = import.meta.env.VITE_CODESPACE_NAME;
+    const baseHost = codespaceName
+      ? `https://${codespaceName}-8000.app.github.dev`
+      : 'http://localhost:8000';
+    url = `${baseHost}${endpoint}`;
+  } else {
+    // Otherwise, append to baseUrl which already includes /api
+    url = `${baseUrl}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
+  }
   
   try {
     const response = await fetch(url);
@@ -36,7 +48,19 @@ export const apiGet = async (endpoint) => {
 
 export const apiPost = async (endpoint, data) => {
   const baseUrl = getApiBaseUrl();
-  const url = `${baseUrl}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
+  let url;
+  
+  // If endpoint already includes /api/, use it as-is with base URL
+  if (endpoint.includes('/api/')) {
+    const codespaceName = import.meta.env.VITE_CODESPACE_NAME;
+    const baseHost = codespaceName
+      ? `https://${codespaceName}-8000.app.github.dev`
+      : 'http://localhost:8000';
+    url = `${baseHost}${endpoint}`;
+  } else {
+    // Otherwise, append to baseUrl which already includes /api
+    url = `${baseUrl}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
+  }
   
   try {
     const response = await fetch(url, {
