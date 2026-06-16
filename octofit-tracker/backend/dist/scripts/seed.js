@@ -9,15 +9,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * This script populates users, teams, activities, workouts, and leaderboard
  */
 const mongoose_1 = __importDefault(require("mongoose"));
+const database_1 = require("../database");
 const user_1 = __importDefault(require("../models/user"));
 const team_1 = __importDefault(require("../models/team"));
 const activity_1 = __importDefault(require("../models/activity"));
 const workout_1 = __importDefault(require("../models/workout"));
 const leaderboard_1 = __importDefault(require("../models/leaderboard"));
-const MONGO = process.env.MONGO_URI || 'mongodb://localhost:27017/octofit_db';
 async function seed() {
-    console.log('Connecting to', MONGO);
-    await mongoose_1.default.connect(MONGO);
+    console.log('Connecting to', database_1.MONGO_URI);
+    await (0, database_1.connectDatabase)();
     console.log('Connected. Clearing existing collections...');
     await Promise.all([
         user_1.default.deleteMany({}),

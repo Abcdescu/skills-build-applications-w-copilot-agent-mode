@@ -4,17 +4,16 @@
  * This script populates users, teams, activities, workouts, and leaderboard
  */
 import mongoose from 'mongoose';
+import { MONGO_URI, connectDatabase } from '../database';
 import User from '../models/user';
 import Team from '../models/team';
 import Activity from '../models/activity';
 import Workout from '../models/workout';
 import Leaderboard from '../models/leaderboard';
 
-const MONGO = process.env.MONGO_URI || 'mongodb://localhost:27017/octofit_db';
-
 async function seed() {
-  console.log('Connecting to', MONGO);
-  await mongoose.connect(MONGO);
+  console.log('Connecting to', MONGO_URI);
+  await connectDatabase();
   console.log('Connected. Clearing existing collections...');
 
   await Promise.all([
