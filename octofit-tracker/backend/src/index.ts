@@ -13,7 +13,7 @@ const PORT = Number(process.env.PORT || 8000);
 const IS_CODESPACE = Boolean(process.env.CODESPACE_NAME);
 const HOST = IS_CODESPACE ? '0.0.0.0' : 'localhost';
 const PUBLIC_URL = IS_CODESPACE
-  ? `https://${process.env.CODESPACE_NAME}-8000.githubpreview.dev`
+  ? `https://${process.env.CODESPACE_NAME}-8000.app.github.dev`
   : `http://${HOST}:${PORT}`;
 
 app.use(express.json());
